@@ -1,0 +1,29 @@
+{
+  "name": "disciplinary_records",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PemaWangdi842/Disciplinary_Records.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PemaWangdi842/Disciplinary_Records/issues"
+  },
+  "homepage": "https://github.com/PemaWangdi842/Disciplinary_Records#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
