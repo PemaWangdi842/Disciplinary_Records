@@ -1,40 +1,55 @@
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config();
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const sequelize = require('./config/db');
+const bodyParser = require('body-parser');
+const authRoutes = require('./routes/authRoutes'); //routes user
+const recordRoutes = require('./routes/recordRoutes'); //routes admin
+const User = require('./models/user'); // Import the User model
+const Record = require('./models/Record'); // Add admin Record model
+const lecturerRoutes = require('./routes/lecturerRoutes');
 
 const app = express();
+// the user logged in and available for authorization checks in future routes.
+const session = require('express-session');
 
-// Middleware
-app.use(cors());
+const PORT = process.env.PORT || 3000; 
+
+app.use(session({
+  secret: '2EslKJUFGk',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Middleware to parse JSON
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Request logging middleware (helps debug incoming requests)
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
+// Serve static HTML (optional, you can keep or remove)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Mount routes (commented out for now)
+app.use('/auth', authRoutes);
+app.use('/', recordRoutes);   // Record management routes
+app.use('/', lecturerRoutes); //liturer
+
+
+
+// Route for home page
+app.get('/', (req, res) => {
+  res.render('index'); // Make sure views/index.ejs exists
 });
 
-// Test route
-app.get("/", (req, res) => {
-  console.log("Root route was hit!"); // Debug log
-  res.send("E-commerce API is running...");
+// Connect to the database and start the server
+sequelize.sync().then(() => {
+  console.log('Database connected...');
+  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}).catch(err => {
+  console.error('Unable to connect to the database:', err);
 });
 
-// Handle 404 (if no routes match)
-app.use((req, res) => {
-  console.log(`Route not found: ${req.method} ${req.url}`); // Debug log
-  res.status(404).send("Route not found");
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error("Error:", err.stack);
-  res.status(500).send("Something broke!");
-});
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Try accessing: http://localhost:${PORT}/`); // Helpful reminder
-});

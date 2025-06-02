@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Disciplinary Record</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header/Nav */
+    header {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px 30px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    nav ul li:first-child {
+      margin-right: auto;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: white;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Form container */
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.65);
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 600px;
+      margin: 40px auto;
+      color: white;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 2rem;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #f0f0f0;
+    }
+
+    form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    form button {
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+    }
+
+    form button:hover {
+      background-color: #e68900;
+    }
+
+    .cancel-btn {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      background-color: #e53e3e;
+      color: white;
+      padding: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .cancel-btn:hover {
+      background-color: #c53030;
+    }
+
+    /* Footer */
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #ccc;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9em;
+      margin-top: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li>Disciplinary System</li>
+        <li><a href="/dsa-dashboard">Home</a></li>
+        <!-- <li><a href="/edit-record">Edit</a></li> -->
+        <li><a href="/add-record">New Record</a></li>
+        <li><a href="/">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="form-container">
+    <h2>Edit Disciplinary Record</h2>
+    <form action="/edit-record/<%= record.id %>" method="POST">
+      <label for="studentName">Student Name:</label>
+      <input type="text" id="studentName" name="studentName" value="<%= record.studentName %>" required>
+
+      <label for="studentId">Student ID:</label>
+      <input type="text" id="studentId" name="studentId" value="<%= record.studentId %>" required>
+
+      <label for="offense">Offense:</label>
+      <input type="text" id="offense" name="offense" value="<%= record.offense %>" required>
+
+      <label for="actionTaken">Action Taken:</label>
+      <input type="text" id="actionTaken" name="actionTaken" value="<%= record.actionTaken %>" required>
+
+      <button type="submit">Update Record</button>
+    </form>
+
+    <a href="/dsa-dashboard" class="cancel-btn">Cancel</a>
+  </div>
+
+  <footer>
+    © 2025 Student Disciplinary Record Management System. All rights reserved.
+  </footer>
+</body>
+</html>

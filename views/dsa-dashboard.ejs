@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DSA Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Reset & Font */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden; /* prevent body scroll */
+    }
+
+    body {
+      background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px 30px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 60px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100%;
+    }
+
+    nav ul li:first-child {
+      margin-right: auto;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Scrollable Content Area */
+    .content-wrapper {
+      flex: 1;
+      overflow-y: auto;
+      margin-top: 60px; /* header height */
+      padding: 2rem;
+      padding-bottom: 100px; /* make room for fixed footer */
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .add-btn {
+      background-color: #ff9800;
+      color: white;
+      padding: 10px 18px;
+      margin: 0 auto 20px;
+      display: block;
+      width: fit-content;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .add-btn:hover {
+      background-color: #e68900;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    th {
+      background-color: rgba(0, 0, 0, 0.7);
+      font-size: 1rem;
+    }
+
+    td {
+      font-size: 0.95rem;
+    }
+
+    td[colspan="5"] {
+      text-align: center;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    td a {
+      background-color: #ff9800;
+      color: white;
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      margin-right: 8px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    td a:hover {
+      background-color: #e68900;
+    }
+
+    td form {
+      display: inline;
+    }
+
+    td button {
+      background-color: #e53e3e;
+      color: white;
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    td button:hover {
+      background-color: #c53030;
+    }
+  
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      z-index: 999;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li class="brand">Disciplinary System</li>
+        <li><a href="/dsa-dashboard">Home</a></li>
+        <li><a href="/add-record">New Record</a></li>
+        <li><a href="/">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <div class="container">
+      <h1>Student Disciplinary Records</h1>
+
+      <a class="add-btn" href="/add-record">Add New Record</a>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Student ID</th>
+            <th>Offense</th>
+            <th>Action Taken</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (records.length === 0) { %>
+            <tr><td colspan="5">No records found.</td></tr>
+          <% } else { %>
+            <% records.forEach(record => { %>
+              <tr>
+                <td><%= record.studentName %></td>
+                <td><%= record.studentId %></td>
+                <td><%= record.offense %></td>
+                <td><%= record.actionTaken %></td>
+                <td>
+                  <a href="/edit-record/<%= record.id %>">Edit</a>
+                  <form action="/delete-record/<%= record.id %>" method="POST">
+                    <button type="submit">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <footer>
+      © 2025 Student Disciplinary Record Management System. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>
